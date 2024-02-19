@@ -1,0 +1,298 @@
+people:
+-
+    id: 2
+    name: Natalie Pullman
+    email: natalie.pullman@example.com
+    city: Kinshasa, DR Congo
+    phone: 555-7449
+    iPhone: True
+    Android: True
+    Desktop: True
+-
+    id: 3
+    name: Amelia Bailey
+    email: amelia.bailey@example.com
+    city: Guadalajara, Mexico
+    phone: 555-3448
+    iPhone: True
+    Android: False
+    Desktop: True
+-
+    id: 5
+    name: Simon Jackson
+    email: simon.jackson@example.com
+    city: Mumbai, India
+    phone: 555-4622
+    iPhone: False
+    Android: True
+    Desktop: False
+-
+    id: 7
+    name: Maria Springer
+    email: maria.springer@example.com
+    city: Luanda, Angola
+    phone: 555-6983
+    iPhone: False
+    Android: False
+    Desktop: True
+-
+    id: 11
+    name: Audrey Parr
+    email: audrey.parr@example.com
+    city: Istanbul, Turkey
+    phone: 555-6516
+    iPhone: True
+    Android: True
+    Desktop: True
+-
+    id: 12
+    name: Christian Jackson
+    email: christian.jackson@example.com
+    city: Washington, United States
+    phone: 555-6080
+    iPhone: True
+    Android: True
+    Desktop: False
+-
+    id: 13
+    name: Simon Duncan
+    email: simon.duncan@example.com
+    city: Qingdao, China
+    phone: 555-3495
+    iPhone: False
+    Android: True
+    Desktop: True
+-
+    id: 17
+    name: Carol Avery
+    email: carol.avery@example.com
+    city: Ho Chi Minh City, Vietnam
+    phone: 555-3718
+    iPhone: True
+    Android: True
+    Desktop: True
+-
+    id: 19
+    name: Ryan Underwood
+    email: ryan.underwood@example.com
+    city: Paris, France
+    phone: 555-7150
+    iPhone: True
+    Android: False
+    Desktop: False
+-
+    id: 23
+    name: Jason North
+    email: jason.north@example.com
+    city: Manila, Philippines
+    phone: 555-6434
+    iPhone: False
+    Android: True
+    Desktop: False
+-
+    id: 29
+    name: Olivia Ball
+    email: olivia.ball@example.com
+    city: Barcelona, Spain
+    phone: 555-6125
+    iPhone: True
+    Android: False
+    Desktop: True
+-
+    id: 31
+    name: Nicholas Dickens
+    email: nicholas.dickens@example.com
+    city: Chicago, United States
+    phone: 555-5595
+    iPhone: True
+    Android: False
+    Desktop: True
+-
+    id: 37
+    name: Gavin Sharp
+    email: gavin.sharp@example.com
+    city: Dallas, United States
+    phone: 555-1893
+    iPhone: False
+    Android: True
+    Desktop: False
+-
+    id: 41
+    name: Abigail Clark
+    email: abigail.clark@example.com
+    city: Santiago, Chile
+    phone: 555-4948
+    iPhone: False
+    Android: False
+    Desktop: True
+-
+    id: 43
+    name: Owen Morgan
+    email: owen.morgan@example.com
+    city: Shenzhen, China
+    phone: 555-7554
+    iPhone: False
+    Android: True
+    Desktop: True
+-
+    id: 47
+    name: Fiona Newman
+    email: fiona.newman@example.com
+    city: Qingdao, China
+    phone: 555-9378
+    iPhone: False
+    Android: True
+    Desktop: False
+-
+    id: 50
+    name: Colin Watson
+    email: colin.watson@example.com
+    city: Houston, United States
+    phone: 555-1755
+    iPhone: True
+    Android: False
+    Desktop: False
+-
+    id: 51
+    name: Michael Howard
+    email: michael.howard@example.com
+    city: Chicago, United States
+    phone: 555-6975
+    iPhone: True
+    Android: False
+    Desktop: False
+-
+    id: 53
+    name: Stephanie Mills
+    email: stephanie.mills@example.com
+    city: Pune, India
+    phone: 555-2170
+    iPhone: False
+    Android: True
+    Desktop: False
+-
+    id: 59
+    name: Amelia Gray
+    email: amelia.gray@example.com
+    city: Hong Kong, China
+    phone: 555-3781
+    iPhone: False
+    Android: False
+    Desktop: True
+-
+    id: 61
+    name: Ava Sanderson
+    email: ava.sanderson@example.com
+    city: Kuala Lumpur, Malaysia
+    phone: 555-2232
+    iPhone: False
+    Android: True
+    Desktop: True
+-
+    id: 67
+    name: Diana Ross
+    email: diana.ross@example.com
+    city: Miami, United States
+    phone: 555-2305
+    iPhone: True
+    Android: False
+    Desktop: False
+-
+    id: 70
+    name: Sean Taylor
+    email: sean.taylor@example.com
+    city: Washington, United States
+    phone: 555-7998
+    iPhone: True
+    Android: False
+    Desktop: True
+-
+    id: 71
+    name: Warren Ogden
+    email: warren.ogden@example.com
+    city: Moscow, Russia
+    phone: 555-8588
+    iPhone: False
+    Android: False
+    Desktop: True
+-
+    id: 73
+    name: Blake Miller
+    email: blake.miller@example.com
+    city: Dhaka, Bangladesh
+    phone: 555-4646
+    iPhone: False
+    Android: True
+    Desktop: True
+-
+    id: 77
+    name: Owen Howard
+    email: owen.howard@example.com
+    city: Los Angeles, United States
+    phone: 555-5006
+    iPhone: True
+    Android: True
+    Desktop: False
+-
+    id: 79
+    name: Keith Harris
+    email: keith.harris@example.com
+    city: Barcelona, Spain
+    phone: 555-1220
+    iPhone: True
+    Android: True
+    Desktop: True
+-
+    id: 83
+    name: Edward North
+    email: edward.north@example.com
+    city: Guadalajara, Mexico
+    phone: 555-5349
+    iPhone: True
+    Android: False
+    Desktop: True
+-
+    id: 89
+    name: David Forsyth
+    email: david.forsyth@example.com
+    city: Hangzhou, China
+    phone: 555-5562
+    iPhone: False
+    Android: False
+    Desktop: True
+-
+    id: 93
+    name: Pippa Tucker
+    email: pippa.tucker@example.com
+    city: Chicago, United States
+    phone: 555-1277
+    iPhone: False
+    Android: True
+    Desktop: True
+-
+    id: 94
+    name: Michael Payne
+    email: michael.payne@example.com
+    city: Houston, United States
+    phone: 555-2600
+    iPhone: False
+    Android: True
+    Desktop: True
+-
+    id: 97
+    name: Dan Young
+    email: dan.young@example.com
+    city: Saint Petersburg, Russia
+    phone: 555-8461
+    iPhone: False
+    Android: False
+    Desktop: True
+-
+    id: 99
+    name: Pippa Wilson
+    email: pippa.wilson@example.com
+    city: Houston, United States
+    phone: 555-8292
+    iPhone: True
+    Android: False
+    Desktop: True

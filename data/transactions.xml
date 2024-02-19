@@ -1,0 +1,282 @@
+<transactions>
+  <transaction id="1000">
+    <buyer_name>E. North</buyer_name>
+    <item>banana</item>
+    <price>2</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2021-02-22</transactionDate>
+  </transaction>
+  <transaction id="1001">
+    <buyer_name>K. Butler</buyer_name>
+    <item>apple</item>
+    <price>3.75</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2021-03-07</transactionDate>
+  </transaction>
+  <transaction id="1002">
+    <buyer_name>J. Coleman</buyer_name>
+    <item>pineapple</item>
+    <price>3.5</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2021-03-18</transactionDate>
+  </transaction>
+  <transaction id="1003">
+    <buyer_name>O. Howard</buyer_name>
+    <item>mango</item>
+    <price>4.5</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2021-06-06</transactionDate>
+  </transaction>
+  <transaction id="1004">
+    <buyer_name>G. Sharp</buyer_name>
+    <item>orange</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2021-06-30</transactionDate>
+  </transaction>
+  <transaction id="1005">
+    <buyer_name>S. Mills</buyer_name>
+    <item>strawberry</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2021-07-20</transactionDate>
+  </transaction>
+  <transaction id="1006">
+    <buyer_name>L. Piper</buyer_name>
+    <item>orange</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2021-08-07</transactionDate>
+  </transaction>
+  <transaction id="1007">
+    <buyer_name>A. Bailey</buyer_name>
+    <item>grape</item>
+    <price>0.75</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2021-08-11</transactionDate>
+  </transaction>
+  <transaction id="1008">
+    <buyer_name>J. Murray</buyer_name>
+    <item>apple</item>
+    <price>2.5</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2021-09-18</transactionDate>
+  </transaction>
+  <transaction id="1009">
+    <buyer_name>F. Simpson</buyer_name>
+    <item>apple</item>
+    <price>2.5</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2021-09-22</transactionDate>
+  </transaction>
+  <transaction id="1010">
+    <buyer_name>K. Harris</buyer_name>
+    <item>strawberry</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2021-09-28</transactionDate>
+  </transaction>
+  <transaction id="1011">
+    <buyer_name>S. Taylor</buyer_name>
+    <item>orange</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2021-12-23</transactionDate>
+  </transaction>
+  <transaction id="1012">
+    <buyer_name>J. Springer</buyer_name>
+    <item>strawberry</item>
+    <price>2</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2022-02-10</transactionDate>
+  </transaction>
+  <transaction id="1013">
+    <buyer_name>J. Blake</buyer_name>
+    <item>apple</item>
+    <price>2.5</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2022-02-12</transactionDate>
+  </transaction>
+  <transaction id="1014">
+    <buyer_name>J. Simpson</buyer_name>
+    <item>grape</item>
+    <price>0.75</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2022-02-24</transactionDate>
+  </transaction>
+  <transaction id="1015">
+    <buyer_name>J. Lambert</buyer_name>
+    <item>pineapple</item>
+    <price>3.5</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2022-04-06</transactionDate>
+  </transaction>
+  <transaction id="1016">
+    <buyer_name>B. Arnold</buyer_name>
+    <item>orange</item>
+    <price>2</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2022-04-30</transactionDate>
+  </transaction>
+  <transaction id="1017">
+    <buyer_name>A. Sanderson</buyer_name>
+    <item>mango</item>
+    <price>4</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2022-05-16</transactionDate>
+  </transaction>
+  <transaction id="1018">
+    <buyer_name>F. Simpson</buyer_name>
+    <item>mango</item>
+    <price>4.5</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2022-06-13</transactionDate>
+  </transaction>
+  <transaction id="1019">
+    <buyer_name>A. Chapman</buyer_name>
+    <item>mango</item>
+    <price>3</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2023-01-14</transactionDate>
+  </transaction>
+  <transaction id="1020">
+    <buyer_name>A. Chapman</buyer_name>
+    <item>apple</item>
+    <price>2.5</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2023-03-03</transactionDate>
+  </transaction>
+  <transaction id="1021">
+    <buyer_name>J. May</buyer_name>
+    <item>pear</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2023-03-12</transactionDate>
+  </transaction>
+  <transaction id="1022">
+    <buyer_name>O. Ball</buyer_name>
+    <item>strawberry</item>
+    <price>2</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2023-04-25</transactionDate>
+  </transaction>
+  <transaction id="1023">
+    <buyer_name>P. Wilson</buyer_name>
+    <item>banana</item>
+    <price>2</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2023-06-09</transactionDate>
+  </transaction>
+  <transaction id="1024">
+    <buyer_name>B. Sutherland</buyer_name>
+    <item>grape</item>
+    <price>1.5</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2023-06-20</transactionDate>
+  </transaction>
+  <transaction id="1025">
+    <buyer_name>L. Piper</buyer_name>
+    <item>kiwi</item>
+    <price>1</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2021-01-06</transactionDate>
+  </transaction>
+  <transaction id="1026">
+    <buyer_name>R. Underwood</buyer_name>
+    <item>banana</item>
+    <price>3</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2021-01-14</transactionDate>
+  </transaction>
+  <transaction id="1027">
+    <buyer_name>E. Hughes</buyer_name>
+    <item>pear</item>
+    <price>2</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2021-01-22</transactionDate>
+  </transaction>
+  <transaction id="1028">
+    <buyer_name>C. Dickens</buyer_name>
+    <item>kiwi</item>
+    <price>1</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2021-04-23</transactionDate>
+  </transaction>
+  <transaction id="1029">
+    <buyer_name>G. Dickens</buyer_name>
+    <item>orange</item>
+    <price>2</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2021-05-23</transactionDate>
+  </transaction>
+  <transaction id="1030">
+    <buyer_name>F. Simpson</buyer_name>
+    <item>kiwi</item>
+    <price>1</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2021-05-27</transactionDate>
+  </transaction>
+  <transaction id="1031">
+    <buyer_name>C. Avery</buyer_name>
+    <item>pear</item>
+    <price>2</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2021-11-21</transactionDate>
+  </transaction>
+  <transaction id="1032">
+    <buyer_name>K. Harris</buyer_name>
+    <item>apple</item>
+    <price>2.5</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2021-12-23</transactionDate>
+  </transaction>
+  <transaction id="1033">
+    <buyer_name>B. Sutherland</buyer_name>
+    <item>mango</item>
+    <price>4.5</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2022-01-27</transactionDate>
+  </transaction>
+  <transaction id="1034">
+    <buyer_name>J. Rees</buyer_name>
+    <item>apple</item>
+    <price>2.5</price>
+    <store>Frolicking Fox Furnishings</store>
+    <transactionDate>2022-08-18</transactionDate>
+  </transaction>
+  <transaction id="1035">
+    <buyer_name>B. Reid</buyer_name>
+    <item>watermelon</item>
+    <price>4</price>
+    <store>Glimmering Gems Boutique</store>
+    <transactionDate>2022-09-12</transactionDate>
+  </transaction>
+  <transaction id="1036">
+    <buyer_name>M. Howard</buyer_name>
+    <item>kiwi</item>
+    <price>2</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2022-11-28</transactionDate>
+  </transaction>
+  <transaction id="1037">
+    <buyer_name>S. Carr</buyer_name>
+    <item>strawberry</item>
+    <price>2</price>
+    <store>Sunrise Sensations Supermarket</store>
+    <transactionDate>2023-03-03</transactionDate>
+  </transaction>
+  <transaction id="1038">
+    <buyer_name>A. Walker</buyer_name>
+    <item>strawberry</item>
+    <price>4.5</price>
+    <store>Whimsical Willow Wares</store>
+    <transactionDate>2023-05-12</transactionDate>
+  </transaction>
+  <transaction id="1039">
+    <buyer_name>A. Parr</buyer_name>
+    <item>grape</item>
+    <price>1.5</price>
+    <store>Pegasus Pet Paradise</store>
+    <transactionDate>2023-06-04</transactionDate>
+  </transaction>
+</transactions>
