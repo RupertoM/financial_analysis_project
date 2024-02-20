@@ -25,8 +25,8 @@ class DataUploader:
         #Populate tables
         self.upload_data()
 
-        #Check data
-        self.check_data()
+        # #Check data
+        # self.check_data()
 
     def setup_tables(self):
         try:

@@ -12,7 +12,7 @@ def hello_world():
 
 if __name__ == "__main__":
     # Check for database creation argument
-    # if len(sys.argv) > 1 and sys.argv[1] == "--restart-db":
+    if len(sys.argv) > 1 and sys.argv[1] == "--restart-db":
         #Process Data using DataProcessor
         data_processor = DataProcessor()
         persons, promotions, transactions, transfers = data_processor.get_processed_data()
@@ -21,4 +21,4 @@ if __name__ == "__main__":
         DataUploader(persons, promotions, transactions, transfers)
 
     # # Run the Flask app
-    # app.run()
+    app.run()
