@@ -6,8 +6,8 @@ CREATE TABLE Persons {
     country VARCHAR(50) NOT NULL,
     phone_number VARCHAR(20) NOT NULL,
     iPhone BOOLEAN NOT NULL,
-    android BOOLEAN NOT NULL,
-    desktop BOOLEAN NOT NULL,
+    Android BOOLEAN NOT NULL,
+    Desktop BOOLEAN NOT NULL,
 };
 
 CREATE TABLE Promotions {
