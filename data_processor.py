@@ -19,7 +19,7 @@ class DataProcessor():
         json_df['id'] = pd.to_numeric(json_df['id'], errors='coerce')
         json_df.rename(columns={'location.city': 'city'}, inplace=True)
         json_df.rename(columns={'location.country': 'country'}, inplace=True)
-        devices_columns = pd.json_normalize(json_df['devices'].apply(lambda x: {device: True for device in x}).tolist()).fillna(False).infer_objects(copy=False)
+        devices_columns = pd.json_normalize(json_df['devices'].apply(lambda x: {device: True for device in x}).tolist()).fillna(False)
         json_df = pd.concat([json_df, devices_columns], axis=1)
         json_df.drop(['devices'], axis=1, inplace=True)
         
@@ -67,6 +67,8 @@ class DataProcessor():
         #Append the person id to the DataFrame in order of promotion_id (row number)
         promotions_df['person_id'] = list_of_ids
 
+        self.promotions_df = promotions_df
+
     def _process_transactions_data(self):
         #Load CSV data into a DataFrame
         transactions_df = pd.read_xml('data/transactions.xml')
@@ -82,13 +84,24 @@ class DataProcessor():
             list_of_ids.append(person_row['id'].values[0])
 
         #Append the person id to the DataFrame in order of transaction_id (row number)
-        transactions_df['person_id'] = list_of_ids
+        transactions_df['buyer_name'] = list_of_ids
+
+        self.transactions_df = transactions_df
 
     #Transfer data already includes the person id, so no need to sanitize data
     def _process_transfer_data(self):
         #Load CSV data into a DataFrame
-        transfers_df = pd.read_csv('data/transfers.csv')
+        self.transfers_df = pd.read_csv('data/transfers.csv')
 
+    def get_processed_data(self):
+        #Match SQL table setup before upload
+        self.shared_people_df.rename(columns={'id': 'person_id'}, inplace=True)
+        self.promotions_df.rename(columns={'promotion': 'promotion_item'}, inplace=True)
+        self.promotions_df.insert(0, 'promotion_id', self.promotions_df.reset_index().index + 1)
+        self.transactions_df.rename(columns={'id': 'transaction_id'}, inplace=True)
+        self.transactions_df.rename(columns={'buyer_name': 'person_id'}, inplace=True)
+        self.transfers_df.insert(0, 'transfer_id', self.transfers_df.reset_index().index + 1)
+        self.transfers_df.rename(columns={'date': 'transferDate'}, inplace=True)
 
-if __name__ == "__main__":
-    processor = DataProcessor()
+        #Return processed data
+        return self.shared_people_df, self.promotions_df, self.transactions_df, self.transfers_df

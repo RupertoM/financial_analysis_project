@@ -1,6 +1,7 @@
 PyYAML
-Flask
+flask
 mysql-connector-python
+sqlalchemy
 pandas
 pyarrow
 lxml
