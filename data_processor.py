@@ -5,7 +5,9 @@ import pandas as pd
 class DataProcessor():
     def __init__(self):
         self._process_persons_data()
-
+        self._process_promotions_data()
+        self._process_transactions_data()
+        self._process_transfer_data()
 
     def _process_persons_data(self):
          # Load JSON data into a DataFrame
@@ -40,7 +42,53 @@ class DataProcessor():
         person_df.reset_index(drop=True, inplace=True)
         person_df.sort_values(by=['id'], inplace=True)
 
-        print(person_df)
+        self.shared_people_df = person_df
+
+    def _process_promotions_data(self):
+        #Load CSV data into a DataFrame
+        promotions_df = pd.read_csv('data/promotions.csv')
+
+        #Resolve the person id related to each record and append it to the DataFrame
+        list_of_ids = []
+        for i in range(len(promotions_df)):
+            registered_email = promotions_df.loc[i, 'client_email']
+
+            #Check if the email is registered
+            if registered_email != "''":
+                person_row = self.shared_people_df[self.shared_people_df['email'] == registered_email]
+                list_of_ids.append(person_row['id'].values[0])
+            
+            #Otherwise, check if the telephone is registered
+            else:
+                registered_number = self.shared_people_df.loc[i, 'telephone']
+                person_row = self.shared_people_df[self.shared_people_df['telephone'] == registered_number]
+                list_of_ids.append(person_row['id'].values[0])
+            
+        #Append the person id to the DataFrame in order of promotion_id (row number)
+        promotions_df['person_id'] = list_of_ids
+
+    def _process_transactions_data(self):
+        #Load CSV data into a DataFrame
+        transactions_df = pd.read_xml('data/transactions.xml')
+
+        #Resolve the person id related to each transaction and append it to the DataFrame
+        list_of_ids = []
+
+        for i in range(len(transactions_df)):
+            first_initial = transactions_df.loc[i, 'buyer_name'][0]
+            last_name = transactions_df.loc[i, 'buyer_name'][3:]
+
+            person_row = self.shared_people_df[(self.shared_people_df['firstName'].str[0] == first_initial) & (self.shared_people_df['surname'] == last_name)]
+            list_of_ids.append(person_row['id'].values[0])
+
+        #Append the person id to the DataFrame in order of transaction_id (row number)
+        transactions_df['person_id'] = list_of_ids
+
+    #Transfer data already includes the person id, so no need to sanitize data
+    def _process_transfer_data(self):
+        #Load CSV data into a DataFrame
+        transfers_df = pd.read_csv('data/transfers.csv')
+
 
 if __name__ == "__main__":
     processor = DataProcessor()
