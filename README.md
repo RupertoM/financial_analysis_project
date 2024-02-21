@@ -102,35 +102,20 @@ The project is organized using the MVC methodology:
 
 3. **Analysis:**
 
-   - Use Pandas and SQL queries to perform data analysis based on user requests.
+   - Use Pandas and SQL queries to analyze data based on user interactions with the front end.
 
 4. **Output:**
    - Display the analyzed data on the web interface for the user to interact with.
-
-## Usage of Data Processing Scripts
-
-- **Data Processor (`data_processor.py`):**
-
-  - Execute `data_processor.py` to handle data processing tasks.
-
-- **Data Uploader (`data_uploader.py`):**
-  - Run `data_uploader.py` to upload data into the MySQL server.
 
 ## Future Improvements
 
 - **Enhanced Analytics:**
 
-  - Consider developing additional backend analytics functions for more in-depth analysis.
+  - Consider developing additional backend analytics functions for more in-depth analysis, add search parameters or front-end filtering.
 
 - **UI Experience:**
-  - Transition from vanilla JavaScript to React for a more concise codebase and improved user interface.
+  - Transition from vanilla JavaScript to React for a more concise codebase and improved user interface with added functionality.
 
 ## Contributors
 
-- [Your Name]
-
-Feel free to reach out for any questions or improvements!
-
----
-
-Feel free to further customize the README based on your specific details, contributors, or any additional information you find relevant. Once you are satisfied with the content, you can simply copy and paste this into the README.md file in your GitHub repository.
+- [Ruperto Martinez]
