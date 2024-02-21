@@ -56,20 +56,20 @@ The project is organized using the MVC methodology:
      pip install -r requirements.txt
      ```
 
-4. **OPTIONAL: Reset Database (Not necessary as AWS server is set up):**
-
-   - If you wish to reset the local database and see the upload, run:
-     ```bash
-     python app.py --reset-db
-     ```
-
-5. **Run Flask Application:**
+4. **Run Flask Application:**
 
    - Start the Flask backend server:
      ```bash
      python app.py
      ```
      Ensure the backend server is running at [http://127.0.0.1:5000](http://127.0.0.1:5000).
+
+5. **OPTIONAL: Reset Database (Not necessary as AWS server is set up):**
+
+   - If you wish to reset the local database and see the upload, run:
+     ```bash
+     python app.py --reset-db
+     ```
 
 6. **Open the Web Interface:**
 
