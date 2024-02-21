@@ -82,7 +82,7 @@ The project is organized using the MVC methodology:
 
 7. **Interact with the Application:**
 
-   - You can now interact with the data analysis application through the provided user interface. You will be able to see drop down selections to interact and view different analytic information.
+   - You can now interact with the data analysis application through the provided user interface. You will be able to see drop-down selections to interact and view different analytic information.
 
 8. **Deactivate Virtual Environment:**
    - When finished, deactivate the virtual environment:
@@ -115,6 +115,9 @@ The project is organized using the MVC methodology:
 
 - **UI Experience:**
   - Transition from vanilla JavaScript to React for a more concise codebase and improved user interface with added functionality.
+
+- **AI/ML Integration:**
+  - Add an AI component to help with data analysis and speed up the process for company employees. Possible use cases would be finding out an individual's native language based on city and country information, translation, and possible connections between people, stores, etc.
 
 ## Contributors
 
