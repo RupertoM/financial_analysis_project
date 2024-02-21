@@ -1,18 +1,52 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
 import sys
 from data_processor import DataProcessor
 from data_uploader import DataUploader
+from controller.data_controller import DataController
 
 app = Flask(__name__)
+CORS(app)
+
+app.json.sort_keys = False
+DC = DataController()
 
 # Base function as filler (REMOVE)
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/api/Sample', methods=['GET'])
+def get_data():
+    return jsonify('Hello, World!')
+
+@app.route('/api/ClientPromotionsTable', methods=['GET'])
+def get_promotion_data():
+    return jsonify(DC.get_clients_promotion())
+
+@app.route('/api/NoResponseTable', methods=['GET'])
+def get_no_response_data():
+    return jsonify(DC.get_no_response_clients())
+
+@app.route('/api/TopSellingItem', methods=['GET'])
+def get_top_selling_item():
+    return jsonify(DC.get_top_selling_item())
+
+@app.route('/api/MostProfitableItem', methods=['GET'])
+def get_most_profitable_item():
+    return jsonify(DC.get_most_profitable_item())
+
+@app.route('/api/MostProfitableStore', methods=['GET'])
+def get_most_profitable_store():
+    return jsonify(DC.get_most_profitable_store())
+
+@app.route('/api/StoreInsightsTable', methods=['GET'])
+def get_store_insights():
+    return jsonify(DC.get_store_insights())
+
+@app.route('/api/TransferInsightsTable', methods=['GET'])
+def get_transfer_insights():
+    return jsonify(DC.get_transfer_insights())
 
 if __name__ == "__main__":
-    # Check for database creation argument
-    if len(sys.argv) > 1 and sys.argv[1] == "--restart-db":
+    # Check for database reset argument
+    if len(sys.argv) > 1 and sys.argv[1] == "--reset-db":
         #Process Data using DataProcessor
         data_processor = DataProcessor()
         persons, promotions, transactions, transfers = data_processor.get_processed_data()
@@ -20,5 +54,5 @@ if __name__ == "__main__":
         # #Upload Data to AWS MySQL using DataUploader
         DataUploader(persons, promotions, transactions, transfers)
 
-    # # Run the Flask app
+    # Run the Flask app
     app.run()

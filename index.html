@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venmito Co.</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      #title {
+        margin-top: 15px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      #dropdown {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      #dataDisplay {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+        overflow-x: auto;
+      }
+
+      #tableContainer {
+        max-width: 100%;
+        overflow-x: auto;
+        margin-bottom: 25px;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        cursor: pointer;
+      }
+
+      .dropdown-container {
+        display: flex;
+        margin-bottom: 10px;
+      }
+
+      .dropdown-label {
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+
+      .dropdown {
+        font-size: 16px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="title">Venmito Analytic Info Tool</div>
+
+    <!-- People Insight Dropdown -->
+    <div class="dropdown-container">
+      <label for="peopleDropdown" class="dropdown-label">People Insight:</label>
+      <select
+        id="peopleDropdown"
+        class="dropdown"
+        onchange="fetchData(this.value)"
+      >
+        <option value="" disabled selected>Select an Analytic</option>
+        <option value="Sample">Hello World</option>
+        <option value="ClientPromotionsTable">
+          All Promotions with Client Info
+        </option>
+        <option value="NoResponseTable">
+          Failed Promotions with Contact Info
+        </option>
+      </select>
+
+      <!-- Stores Insight Dropdown -->
+      <label for="storesDropdown" class="dropdown-label">Stores Insight:</label>
+      <select
+        id="storesDropdown"
+        class="dropdown"
+        onchange="fetchData(this.value)"
+      >
+        <option value="" disabled selected>Select an Analytic</option>
+        <option value="TopSellingItem">Top Selling Item</option>
+        <option value="MostProfitableItem">Greatest Revenue Item</option>
+        <option value="MostProfitableStore">Top Selling Store</option>
+        <option value="StoreInsightsTable">All Stores Sales</option>
+      </select>
+
+      <!-- Transfer Insight Dropdown -->
+      <label for="transferDropdown" class="dropdown-label"
+        >Transfer Insight:</label
+      >
+      <select
+        id="transferDropdown"
+        class="dropdown"
+        onchange="fetchData(this.value)"
+      >
+        <option value="" disabled selected>Select an Analytic</option>
+        <option value="TransferInsightsTable">All Transfers</option>
+      </select>
+
+      <!-- Transaction Insight Dropdown -->
+      <label for="transactionDropdown" class="dropdown-label"
+        >Transaction Insight:</label
+      >
+      <select
+        id="transactionDropdown"
+        class="dropdown"
+        onchange="fetchData(this.value)"
+      >
+        <option value="" disabled selected>Select an Analytic</option>
+        <option value="topSenderTable">Top Sender (Table)</option>
+        <option value="topSellingStoreText">Top Selling Store (Text)</option>
+        <option value="topSenderText">Top Sender (Text)</option>
+      </select>
+    </div>
+
+    <div id="tableContainer">
+      <div id="dataDisplay"></div>
+    </div>
+    <script>
+      async function fetchData(endpoint) {
+        if (!endpoint) return;
+
+        try {
+          const response = await fetch(`http://127.0.0.1:5000/api/${endpoint}`);
+          const data = await response.json();
+
+          let displayContent;
+
+          if (endpoint.includes("Table")) {
+            displayContent = generateTable(data);
+          } else {
+            displayContent = generateText(data);
+          }
+
+          document.getElementById("dataDisplay").innerHTML = displayContent;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      function generateTable(data) {
+        if (!data || data.length === 0) {
+          return "<p>No data available.</p>";
+        }
+
+        let tableHTML = "<table>";
+        const columns = Object.keys(data[0]);
+
+        // Create table header
+        tableHTML += "<tr>";
+        columns.forEach((column) => {
+          if (!(column === "firstName" || column === "surname")) {
+            tableHTML += `<th>${column}</th>`;
+          }
+        });
+
+        // Check if both "firstName" and "surname" columns exist for adding the "Full Name" header
+        const hasFirstName = columns.includes("firstName");
+        const hasSurname = columns.includes("surname");
+
+        if (hasFirstName && hasSurname) {
+          tableHTML += "<th>Full Name</th>";
+        }
+
+        tableHTML += "</tr>";
+
+        // Create table rows
+        data.forEach((item) => {
+          tableHTML += "<tr>";
+
+          // For other columns in the rows
+          columns.forEach((column) => {
+            if (!(column === "firstName" || column === "surname")) {
+              const cellValue =
+                item[column] !== "''" ? item[column] : "Unknown";
+              tableHTML += `<td>${cellValue}</td>`;
+            }
+          });
+
+          // Combine firstName and surname into fullName if both columns exist
+          if (hasFirstName && hasSurname) {
+            const fullName = `${item["firstName"]} ${item["surname"]}`;
+            tableHTML += `<td>${fullName}</td>`;
+          }
+
+          tableHTML += "</tr>";
+        });
+
+        tableHTML += "</table>";
+
+        return tableHTML;
+      }
+
+      function generateText(data) {
+        return data;
+      }
+      function resetDropdowns(currentDropdownId) {
+        const dropdownIds = [
+          "peopleDropdown",
+          "storesDropdown",
+          "transferDropdown",
+          "transactionDropdown",
+        ];
+
+        dropdownIds.forEach((dropdownId) => {
+          if (dropdownId !== currentDropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.selectedIndex = 0; // Set to the "Select an Analytic" option
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchData("");
+      });
+
+      document
+        .getElementById("peopleDropdown")
+        .addEventListener("change", (event) => {
+          resetDropdowns("peopleDropdown");
+          const selectedOption = event.target.value;
+          fetchData(selectedOption);
+        });
+
+      document
+        .getElementById("storesDropdown")
+        .addEventListener("change", (event) => {
+          resetDropdowns("storesDropdown");
+          const selectedOption = event.target.value;
+          fetchData(selectedOption);
+        });
+
+      document
+        .getElementById("transferDropdown")
+        .addEventListener("change", (event) => {
+          resetDropdowns("transferDropdown");
+          const selectedOption = event.target.value;
+          fetchData(selectedOption);
+        });
+
+      document
+        .getElementById("transactionDropdown")
+        .addEventListener("change", (event) => {
+          resetDropdowns("transactionDropdown");
+          const selectedOption = event.target.value;
+          fetchData(selectedOption);
+        });
+    </script>
+  </body>
+</html>

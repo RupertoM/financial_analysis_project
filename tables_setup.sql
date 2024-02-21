@@ -16,7 +16,7 @@ CREATE TABLE Promotions (
     client_email VARCHAR(255) NOT NULL,
     telephone VARCHAR(20),
     promotion_item VARCHAR(50) NOT NULL,
-    responded BOOLEAN NOT NULL DEFAULT FALSE,
+    responded VARCHAR(20) NOT NULL,
     person_id INT NOT NULL,
     FOREIGN KEY (person_id) REFERENCES Persons(person_id)
 );
@@ -25,7 +25,7 @@ CREATE TABLE Transactions (
     transaction_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     person_id INT NOT NULL,
     item VARCHAR(50) NOT NULL,
-    price DECIMAL NOT NULL,
+    price DECIMAL(4, 2) NOT NULL,
     store VARCHAR(255) NOT NULL,
     transactionDate DATE NOT NULL,
     FOREIGN KEY (person_id) REFERENCES Persons(person_id)
