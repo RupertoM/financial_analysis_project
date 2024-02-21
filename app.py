@@ -11,10 +11,10 @@ CORS(app)
 app.json.sort_keys = False
 DC = DataController()
 
-# Base function as filler (REMOVE)
-@app.route('/api/Sample', methods=['GET'])
-def get_data():
-    return jsonify('Hello, World!')
+#PERSONS
+@app.route('/api/PersonsTable', methods=['GET'])
+def get_persons_data():
+    return jsonify(DC.get_all_persons())
 
 @app.route('/api/ClientPromotionsTable', methods=['GET'])
 def get_promotion_data():
@@ -24,6 +24,7 @@ def get_promotion_data():
 def get_no_response_data():
     return jsonify(DC.get_no_response_clients())
 
+#STORES
 @app.route('/api/TopSellingItem', methods=['GET'])
 def get_top_selling_item():
     return jsonify(DC.get_top_selling_item())
@@ -40,9 +41,23 @@ def get_most_profitable_store():
 def get_store_insights():
     return jsonify(DC.get_store_insights())
 
+#TRANSFERS
 @app.route('/api/TransferInsightsTable', methods=['GET'])
 def get_transfer_insights():
     return jsonify(DC.get_transfer_insights())
+
+#TRANSACTIONS
+@app.route('/api/TransactionInsightsTable', methods=['GET'])
+def get_transaction_insights():
+    return jsonify(DC.get_all_transactions())
+
+@app.route('/api/IndividualTransTable', methods=['GET'])
+def get_shopping_history():
+    return jsonify(DC.get_individuals_transactions())
+
+@app.route('/api/FavoriteStoreTable', methods=['GET'])
+def get_favorite_stores():
+    return jsonify(DC.get_person_favorite_store())
 
 if __name__ == "__main__":
     # Check for database reset argument

@@ -14,9 +14,18 @@ class DataModel():
         )
         self.engine = create_engine('mysql+mysqlconnector://adminUser:userPassword!@venmito-database.ch2o2eoaqxux.us-east-1.rds.amazonaws.com/venmito')
 
+#PERSONS
+    def get_all_persons(self):
+        query = """
+        SELECT person_id, CONCAT(firstName, ' ', surname) AS full_name, email, telephone, city, country
+        FROM Persons
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
     def get_clients_promotion(self):
         query = """
-        SELECT p.promotion_item, p.responded, pr.firstName, pr.surname, pr.email, pr.telephone
+        SELECT p.promotion_item, CONCAT(pr.firstName, ' ', pr.surname) AS full_name, p.responded, pr.email, pr.telephone
         FROM Promotions p
         JOIN Persons pr ON p.person_id = pr.person_id
         ORDER BY p.promotion_item
@@ -26,11 +35,27 @@ class DataModel():
 
     def get_no_response_clients(self):
         query = """
-        SELECT p.promotion_item, pr.firstName, pr.surname, p.client_email, p.telephone
+        SELECT p.promotion_item, CONCAT(pr.firstName, ' ', pr.surname) AS full_name, p.client_email, p.telephone, GROUP_CONCAT(DISTINCT t.store) AS visited_stores
         FROM Promotions p
         JOIN Persons pr ON p.person_id = pr.person_id
-        WHERE p.responded = "No"
-        ORDER BY p.promotion_item
+        LEFT JOIN Transactions t ON p.person_id = t.person_id
+        WHERE p.responded = 'No'
+        GROUP BY p.promotion_item, full_name, p.client_email, p.telephone
+        ORDER BY p.promotion_item, full_name
+        """
+        result = pd.read_sql(query, self.engine)
+        #Change all null values to "None"
+        result['visited_stores'] = result['visited_stores'].fillna('None')
+        return result.to_dict(orient='records')
+    
+#STORES
+    def get_store_insights(self):
+        #Select individual items and put them in a list within "item" column
+        query = """
+        SELECT t.store, SUM(t.price) as total_profit_usd, COUNT(t.item) as amount_of_sales, GROUP_CONCAT(t.item) as items_sold
+        FROM Transactions t
+        GROUP BY t.store
+        ORDER BY total_profit_usd DESC
         """
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
@@ -69,17 +94,8 @@ class DataModel():
 
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
-    
-    def get_store_insights(self):
-        query = """
-        SELECT t.store, SUM(t.price) as total_profit
-        FROM Transactions t
-        GROUP BY t.store
-        ORDER BY total_profit DESC
-        """
-        result = pd.read_sql(query, self.engine)
-        return result.to_dict(orient='records')
 
+#TRANSFERS
     def get_transfer_insights(self):
         query = """
         SELECT sender.email as sender_email, recipient.email as recipient_email, tr.amount, tr.transferDate
@@ -89,7 +105,37 @@ class DataModel():
         """
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
-
+    
+#TRANSACTIONS
+    def get_all_transactions(self):
+        query = """
+        SELECT t.transaction_id, pr.firstName, pr.surname, t.item, t.price, t.store, t.transactionDate
+        FROM Transactions t
+        JOIN Persons pr ON t.person_id = pr.person_id
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_individuals_transactions(self):
+        query = """
+        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, t.item, t.price, t.store, t.transactionDate
+        FROM Transactions t
+        JOIN Persons pr ON t.person_id = pr.person_id
+        ORDER BY full_name, t.transactionDate
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_persons_favorite_store(self):
+        query = """
+        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, t.store as favorite_store, COUNT(t.store) as visits
+        FROM Transactions t
+        JOIN Persons pr ON t.person_id = pr.person_id
+        GROUP BY full_name, favorite_store
+        ORDER BY full_name, visits DESC
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
 
 ##SQL SCHEMA
 

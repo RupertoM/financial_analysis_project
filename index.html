@@ -86,12 +86,12 @@
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
-        <option value="Sample">Hello World</option>
+        <option value="PersonsTable">All Data on People</option>
         <option value="ClientPromotionsTable">
           All Promotions with Client Info
         </option>
         <option value="NoResponseTable">
-          Failed Promotions with Contact Info
+          Failed Promotions with Person Info
         </option>
       </select>
 
@@ -103,10 +103,10 @@
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
+        <option value="StoreInsightsTable">All Stores Data</option>
+        <option value="MostProfitableStore">Most Profitable Store</option>
         <option value="TopSellingItem">Top Selling Item</option>
         <option value="MostProfitableItem">Greatest Revenue Item</option>
-        <option value="MostProfitableStore">Top Selling Store</option>
-        <option value="StoreInsightsTable">All Stores Sales</option>
       </select>
 
       <!-- Transfer Insight Dropdown -->
@@ -119,7 +119,7 @@
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
-        <option value="TransferInsightsTable">All Transfers</option>
+        <option value="TransferInsightsTable">All Transfer Data</option>
       </select>
 
       <!-- Transaction Insight Dropdown -->
@@ -132,9 +132,9 @@
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
-        <option value="topSenderTable">Top Sender (Table)</option>
-        <option value="topSellingStoreText">Top Selling Store (Text)</option>
-        <option value="topSenderText">Top Sender (Text)</option>
+        <option value="TransactionInsightsTable">All Transaction Data</option>
+        <option value="IndividualTransTable">Shopping History by Person</option>
+        <option value="FavoriteStoreTable">Individuals Favorite Stores</option>
       </select>
     </div>
 
