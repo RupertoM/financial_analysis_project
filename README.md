@@ -1,12 +1,8 @@
 # Venmito Data Engineering Project
 
-## Introduction
+## Overview
 
-Hello and welcome to this data engineering project for Venmito. We're excited to see how you tackle this challenge and provide us with a solution that can bring together disparate data sources into an insightful and valuable resource.
-
-Venmito is a company with several data files in various formats. Our goal is to organize all of this information to gain insights about our clients and transactions. We believe that there is an immense value hidden in these data files, and we are looking for a solution that can help us extract and utilize this value.
-
-We have five files:
+This repository contains the code and files for a data engineering project focused on a company named "Venmito." The objective of this project was to ingest, match, conform, analyze, and present data from five different files:
 
 - `people.json`
 - `people.yml`
@@ -14,53 +10,127 @@ We have five files:
 - `transactions.xml`
 - `promotions.csv`
 
-Each of these files contains different pieces of information about our clients, their transactions, transfers and promotions.
+The project was implemented using Python, the Pandas library, Flask, MySQL, AWS, and a Model-View-Controller (MVC) architecture.
 
-Your task is to develop a solution that can read these files, match and conform the data, and provide a way to consume this data.
+## Project Structure
 
-## Requirements
+The project is organized using the MVC methodology:
 
-1. **Data Ingestion**: Your solution should be able to read and load data from all the provided files. Take into account that these files are in different formats (JSON, YAML, CSV, XML).
+- **Model**: The model is responsible for handling data operations. It communicates with a MySQL server hosted on AWS to fetch data using SQL queries.
 
-2. **Data Matching and Conforming**: Once the data is loaded, your solution should be capable of matching and conforming the data across these files. This includes identifying common entities, resolving inconsistencies, and organizing the data into a unified format. Furthermore, the consolidated data should not only be transient but also persistent. This persistence should be achieved using appropriate methods such as storing in a file, database, or other suitable data storage solutions, and not restricted to just a variable in memory. This way, the integrity and availability of the consolidated data are ensured for future use and analysis.
+- **View**: The view is a simple HTML file with some vanilla JavaScript, providing a user interface for interacting with and visualizing the data.
 
-3. **Data Analysis**: Your solution should be able to process the conformed data to derive insights about our clients and transactions. This would involve implementing data aggregations, calculating relevant metrics, and identifying patterns. These insights will be invaluable in helping us understand our clientele and transaction trends better. Examples of things, but is not restricted to, we want to be able to see are:
-    - Which clients have what type of promotion?
-    - Give suggestions on how to turn "No" responses from clients in the promotions file.
-    - Insights on stores, like:
-        - What item is the best seller?
-        - What store has had the most profit?
-        - Etc.
-    - How can we use the data we got from the transfer file?
-  
-    These are only suggestions. Please don't limit yourself to only these examples and explore in your analysis any other suggestions could be beneficial for Venmito.
+- **Controller**: The controller handles the interaction between the user and the model. It processes user inputs, requests data from the model, and passes the information to the view for display.
 
-4. **Data Output**: The final output of your solution should enable us to consume the reorganized and analyzed data in a meaningful way. This could be, but is not restricted to, a command line interface (CLI), a database with structured schemas, a GUI featuring interactive visualizations, a Jupyter Notebook, or a RESTful API. We invite you to leverage other innovative methods that you believe would be beneficial for a company like Venmito.
+- **Data Processing**: Data processing is encapsulated in `data_processor.py`, which contains logic for ingesting, matching, and conforming data.
 
-5. **Code**: The code for your solution should be well-structured and comprehensible, with comments included where necessary. Remember, the quality and readability of the code will be a significant factor in the evaluation of the final deliverable.
+- **Data Uploading**: `data_uploader.py` is used for pushing data into the MySQL server, ensuring the model only fetches data without manipulating it while also allowing for the ease of resetting the database at any time given that no new data was being passed in.
 
-Note: The examples provided in these requirements (such as GUI, RESTful API etc.) are purely illustrative. You are free to employ any solution or technology you deem fit for fulfilling these requirements
+## Setup and Usage
 
-## Deliverables
+1. **Install and Setup Virtual Environment:**
 
-1. Source code.
-2. A README file with your name, email, a description of your solution, your design decisions, and clear instructions on how to run your code.
-3. A method to consume the reorganized and analyzed data.
+   - Ensure you have Python installed on your system.
+   - Open a terminal and navigate to the project directory.
+   - Run the following commands:
 
-## Instructions for Submission
+     ```bash
+     # Install virtualenv using pip
+     pip install virtualenv
 
-1. Complete your project as described above within your fork.
-2. Write a detailed README file with your name, email, a description explaining your approach, the technologies you used, and provides clear instructions on how to run your code.
-3. Submit your project by creating a pull request to this repository.
+     # Create a virtual environment named '.venv'
+     python -m venv .venv
+     ```
 
-We look forward to seeing your solution!
+2. **Activate Virtual Environment:**
 
-Thank you,
+   - On Mac/Linux, activate the virtual environment:
+     ```bash
+     source .venv/bin/activate
+     ```
 
-Venmito
+3. **Install Dependencies:**
 
-## DISCLAIMER:
+   - With the virtual environment activated, install project dependencies using:
+     ```bash
+     pip install -r requirements.txt
+     ```
 
-This project and its contents are the exclusive property of Xtillion, LLC and are intended solely for the evaluation of the individual to whom it was provided. Any distribution, reproduction, or unauthorized use is strictly prohibited. By accessing and using this project, you agree to abide by these conditions. Failure to comply with these terms may result in legal action.
+4. **OPTIONAL: Reset Database (Not necessary as AWS server is set up):**
 
-Please note that this project is provided "as is", without warranty of any kind, express or implied. Xtillion is not liable for any damages or claims that might arise from using or misusing this project.
+   - If you wish to reset the local database and see the upload, run:
+     ```bash
+     python app.py --reset-db
+     ```
+
+5. **Run Flask Application:**
+
+   - Start the Flask backend server:
+     ```bash
+     python app.py
+     ```
+     Ensure the backend server is running at [http://127.0.0.1:5000](http://127.0.0.1:5000).
+
+6. **Open the Web Interface:**
+
+   - Open a new terminal window (while keeping the virtual environment active).
+   - Run the following command to open the web interface in your default browser:
+     ```bash
+     open index.html
+     ```
+     If you prefer a different browser, copy and paste the provided link at the top of your default browser into the browser of your choosing.
+
+7. **Interact with the Application:**
+
+   - You can now interact with the data analysis application through the provided user interface. You will be able to see drop down selections to interact and view different analytic information.
+
+8. **Deactivate Virtual Environment:**
+   - When finished, deactivate the virtual environment:
+     ```bash
+     deactivate
+     ```
+
+## Data Processing Steps
+
+1. **Ingestion:**
+
+   - Read the data from the provided files (`people.json`, `people.yml`, `transfers.csv`, `transactions.xml`, `promotions.csv`) using Pandas.
+
+2. **Matching and Conforming:**
+
+   - Implement matching and conforming logic in `data_processor.py` to ensure data consistency.
+
+3. **Analysis:**
+
+   - Use Pandas and SQL queries to perform data analysis based on user requests.
+
+4. **Output:**
+   - Display the analyzed data on the web interface for the user to interact with.
+
+## Usage of Data Processing Scripts
+
+- **Data Processor (`data_processor.py`):**
+
+  - Execute `data_processor.py` to handle data processing tasks.
+
+- **Data Uploader (`data_uploader.py`):**
+  - Run `data_uploader.py` to upload data into the MySQL server.
+
+## Future Improvements
+
+- **Enhanced Analytics:**
+
+  - Consider developing additional backend analytics functions for more in-depth analysis.
+
+- **UI Experience:**
+  - Transition from vanilla JavaScript to React for a more concise codebase and improved user interface.
+
+## Contributors
+
+- [Your Name]
+
+Feel free to reach out for any questions or improvements!
+
+---
+
+Feel free to further customize the README based on your specific details, contributors, or any additional information you find relevant. Once you are satisfied with the content, you can simply copy and paste this into the README.md file in your GitHub repository.
