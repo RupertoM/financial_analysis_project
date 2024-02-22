@@ -1,12 +1,8 @@
 # Venmito Data Engineering Project
 
-## Introduction
+## Overview
 
-Hello and welcome to this data engineering project for Venmito. We're excited to see how you tackle this challenge and provide us with a solution that can bring together disparate data sources into an insightful and valuable resource.
-
-Venmito is a company with several data files in various formats. Our goal is to organize all of this information to gain insights about our clients and transactions. We believe that there is an immense value hidden in these data files, and we are looking for a solution that can help us extract and utilize this value.
-
-We have five files:
+This repository contains the code and files for a data engineering project focused on a company named "Venmito." The objective of this project was to ingest, match, conform, analyze, and present data from five different files:
 
 - `people.json`
 - `people.yml`
@@ -14,53 +10,184 @@ We have five files:
 - `transactions.xml`
 - `promotions.csv`
 
-Each of these files contains different pieces of information about our clients, their transactions, transfers and promotions.
+The project was implemented using Python, the Pandas library, Flask, MySQL, AWS, and a Model-View-Controller (MVC) architecture.
 
-Your task is to develop a solution that can read these files, match and conform the data, and provide a way to consume this data.
+## Project Structure
 
-## Requirements
+The project is organized using the MVC methodology:
 
-1. **Data Ingestion**: Your solution should be able to read and load data from all the provided files. Take into account that these files are in different formats (JSON, YAML, CSV, XML).
+- **Model**: The model is responsible for handling data operations. It communicates with a MySQL server hosted on AWS to fetch data using SQL queries.
 
-2. **Data Matching and Conforming**: Once the data is loaded, your solution should be capable of matching and conforming the data across these files. This includes identifying common entities, resolving inconsistencies, and organizing the data into a unified format. Furthermore, the consolidated data should not only be transient but also persistent. This persistence should be achieved using appropriate methods such as storing in a file, database, or other suitable data storage solutions, and not restricted to just a variable in memory. This way, the integrity and availability of the consolidated data are ensured for future use and analysis.
+- **View**: The view is a simple HTML file with some vanilla JavaScript, providing a user interface for interacting with and visualizing the data.
 
-3. **Data Analysis**: Your solution should be able to process the conformed data to derive insights about our clients and transactions. This would involve implementing data aggregations, calculating relevant metrics, and identifying patterns. These insights will be invaluable in helping us understand our clientele and transaction trends better. Examples of things, but is not restricted to, we want to be able to see are:
-    - Which clients have what type of promotion?
-    - Give suggestions on how to turn "No" responses from clients in the promotions file.
-    - Insights on stores, like:
-        - What item is the best seller?
-        - What store has had the most profit?
-        - Etc.
-    - How can we use the data we got from the transfer file?
-  
-    These are only suggestions. Please don't limit yourself to only these examples and explore in your analysis any other suggestions could be beneficial for Venmito.
+- **Controller**: The controller handles the interaction between the user and the model. It processes user inputs, requests data from the model, and passes the information to the view for display.
 
-4. **Data Output**: The final output of your solution should enable us to consume the reorganized and analyzed data in a meaningful way. This could be, but is not restricted to, a command line interface (CLI), a database with structured schemas, a GUI featuring interactive visualizations, a Jupyter Notebook, or a RESTful API. We invite you to leverage other innovative methods that you believe would be beneficial for a company like Venmito.
+- **Data Processing**: Data processing is encapsulated in `data_processor.py`, which contains logic for ingesting, matching, and conforming data.
 
-5. **Code**: The code for your solution should be well-structured and comprehensible, with comments included where necessary. Remember, the quality and readability of the code will be a significant factor in the evaluation of the final deliverable.
+- **Data Uploading**: `data_uploader.py` is used for pushing data into the MySQL server, ensuring the model only fetches data without manipulating it while also allowing for the ease of resetting the database at any time given that no new data was being passed in.
 
-Note: The examples provided in these requirements (such as GUI, RESTful API etc.) are purely illustrative. You are free to employ any solution or technology you deem fit for fulfilling these requirements
+## SQL Schema
 
-## Deliverables
+### Persons Table
 
-1. Source code.
-2. A README file with your name, email, a description of your solution, your design decisions, and clear instructions on how to run your code.
-3. A method to consume the reorganized and analyzed data.
+- **Columns:**
+  - `person_id` INT PRIMARY KEY
+  - `firstName` VARCHAR(100) NOT NULL
+  - `surname` VARCHAR(100) NOT NULL
+  - `email` VARCHAR(255) NOT NULL
+  - `telephone` VARCHAR(20) NOT NULL
+  - `city` VARCHAR(50) NOT NULL
+  - `country` VARCHAR(50) NOT NULL
+  - `Android` BOOLEAN NOT NULL
+  - `iPhone` BOOLEAN NOT NULL
+  - `Desktop` BOOLEAN NOT NULL
 
-## Instructions for Submission
+### Promotions Table
 
-1. Complete your project as described above within your fork.
-2. Write a detailed README file with your name, email, a description explaining your approach, the technologies you used, and provides clear instructions on how to run your code.
-3. Submit your project by creating a pull request to this repository.
+- **Columns:**
+  - `promotion_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  - `client_email` VARCHAR(255) NOT NULL
+  - `telephone` VARCHAR(20)
+  - `promotion_item` VARCHAR(50) NOT NULL
+  - `responded` VARCHAR(20) NOT NULL
+  - `person_id` INT NOT NULL, FOREIGN KEY (person_id) REFERENCES Persons(person_id)
 
-We look forward to seeing your solution!
+### Transactions Table
 
-Thank you,
+- **Columns:**
+  - `transaction_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  - `person_id` INT NOT NULL, FOREIGN KEY (person_id) REFERENCES Persons(person_id)
+  - `item` VARCHAR(50) NOT NULL
+  - `price` DECIMAL NOT NULL
+  - `store` VARCHAR(255) NOT NULL
+  - `transactionDate` DATE NOT NULL
 
-Venmito
+### Transfers Table
 
-## DISCLAIMER:
+- **Columns:**
+  - `transfer_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  - `sender_id` INT NOT NULL, FOREIGN KEY (sender_id) REFERENCES Persons(person_id)
+  - `recipient_id` INT NOT NULL, FOREIGN KEY (recipient_id) REFERENCES Persons(person_id)
+  - `amount` DECIMAL NOT NULL
+  - `transferDate` DATE NOT NULL
 
-This project and its contents are the exclusive property of Xtillion, LLC and are intended solely for the evaluation of the individual to whom it was provided. Any distribution, reproduction, or unauthorized use is strictly prohibited. By accessing and using this project, you agree to abide by these conditions. Failure to comply with these terms may result in legal action.
+## Data Analysis
 
-Please note that this project is provided "as is", without warranty of any kind, express or implied. Xtillion is not liable for any damages or claims that might arise from using or misusing this project.
+1. **People Insights:**
+
+   - *Use Case:* This option allows users to analyze data related to individuals, such as their personal information, possible connections, shopping trends, and more.
+
+   - *Company Benefits:* Understanding customers and preferences helps Venmito tailor promotions and communication strategies, enhancing customer satisfaction and loyalty.
+
+   - *Available Analytics:*
+     - **All Promotions:** Displays all currently available promotions, including recipient information so that the viewer can get an overview.
+     - **All Failed Promotions:** Lists individuals who rejected promotions along with their contact information, facilitating follow-up efforts to convert negative responses.
+     - **Individuals Shopping History:** Displays data on individuals' transaction history, including purchased items and transaction details.
+     - **Individuals Favorite Stores:** Highlights stores frequently visited by each individual enabling understanding of store access and item availability.
+     - **Individuals Favorite Items:** Lists items purchased and favored by individuals, enabling targeted promotions.
+     - **Probable Connections:** Identifies individuals likely acquainted, facilitating potential joint promotions and communications.
+
+2. **Stores Insights:**
+
+   - *Use Case:* Analyzing store data provides insights into store performance, popular items, profitability, promotion performance, and more.
+
+   - *Company Benefits:* Venmito can optimize store operations, stock popular items, and improve overall store efficiency.
+
+   - *Available Analytics:*
+     - **Best Selling Stores:** Highlights stores with the highest sales.
+     - **Best Selling Items:** Identifies the best-selling item across all stores and the best-selling item across each individual store.
+     - **Most Profitable Items:** Lists the most profitable item across all stores and the most profitable per each store.
+     - **Successful Promotion Items:** Displays items that performed well in promotions and who they succeded with.
+     - **Failed Promotion Items:** Lists items that did not perform well in promotions and who they did not perform well with.
+
+3. **General Data:**
+
+   - *Use Case:* Provides access to general data, allowing users to view comprehensive information.
+
+   - *Company Benefits:* Enables users to explore overall trends, patterns, and information within the dataset by having full access.
+
+   - *Available Analytics:*
+     - **All Data on People:** Provides comprehensive data on all individuals within the dataset.
+     - **All Stores Data:** Displays comprehensive data on all stores.
+     - **All Transfer Data:** Provides a detailed overview of all transfer transactions.
+     - **All Transaction Data:** Offers a comprehensive view of all transactions.
+
+## Setup and Usage
+
+1. **Install and Setup Virtual Environment:**
+
+   - Ensure you have Python installed on your system.
+   - Open a terminal and navigate to the project directory.
+   - Run the following commands:
+
+     ```bash
+     # Install virtualenv using pip
+     pip install virtualenv
+
+     # Create a virtual environment named '.venv'
+     python -m venv .venv
+     ```
+
+2. **Activate Virtual Environment:**
+
+   - On Mac/Linux, activate the virtual environment:
+     ```bash
+     source .venv/bin/activate
+     ```
+
+3. **Install Dependencies:**
+
+   - With the virtual environment activated, install project dependencies using:
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+4. **Run Flask Application:**
+
+   - Start the Flask backend server:
+     ```bash
+     python app.py
+     ```
+     Ensure the backend server is running at [http://127.0.0.1:5000](http://127.0.0.1:5000).
+
+5. **OPTIONAL: Reset Database (Not necessary as AWS server is set up):**
+
+   - If you wish to reset the local database and see the upload, run:
+     ```bash
+     python app.py --reset-db
+     ```
+
+6. **Open the Web Interface:**
+
+   - Open a new terminal window (while keeping the virtual environment active).
+   - Run the following command to open the web interface in your default browser:
+     ```bash
+     open index.html
+     ```
+     If you prefer a different browser, copy and paste the provided link at the top of your default browser into the browser of your choosing.
+
+7. **Interact with the Application:**
+
+   - You can now interact with the data analysis application through the provided user interface. You will be able to see drop-down selections to interact and view different analytic information.
+
+8. **Deactivate Virtual Environment:**
+   - When finished, deactivate the virtual environment:
+     ```bash
+     deactivate
+     ```
+     
+## Future Improvements
+
+- **Enhanced Analytics:**
+
+  - Consider developing additional backend analytics functions for more in-depth analysis, add search parameters or front-end filtering.
+
+- **UI Experience:**
+  - Transition from vanilla JavaScript to React for a more concise codebase and improved user interface with added functionality.
+
+- **AI/ML Integration:**
+  - Add an AI component to help with data analysis and speed up the process for company employees. Possible use cases would be finding out an individual's native language based on city and country information, translation, and possible connections between people, stores, etc.
+
+## Contributors
+
+- Ruperto Martinez

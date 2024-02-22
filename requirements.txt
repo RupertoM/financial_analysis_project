@@ -1,0 +1,8 @@
+PyYAML
+flask
+flask-cors
+mysql-connector-python
+sqlalchemy
+pandas
+pyarrow
+lxml
