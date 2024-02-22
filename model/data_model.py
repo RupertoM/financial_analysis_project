@@ -96,7 +96,6 @@ class DataModel():
 
 #STORES
     def get_store_insights(self):
-        #Select individual items and put them in a list within "item" column
         query = """
         SELECT t.store, SUM(t.price) as total_profit_usd, COUNT(t.item) as amount_of_sales, GROUP_CONCAT(t.item) as items_sold
         FROM Transactions t
@@ -128,8 +127,8 @@ class DataModel():
 
     def get_most_profitable_items(self):
         query = """
-        SELECT store, item, total_sales FROM (
-            (SELECT 'Overall' AS store, t.item, SUM(t.price) as total_sales,
+        SELECT store, item, total_usd_in_sales FROM (
+            (SELECT 'Overall' AS store, t.item, SUM(t.price) as total_usd_in_sales,
             ROW_NUMBER() OVER (ORDER BY SUM(t.price) DESC) as rn
             FROM Transactions t
             JOIN Persons pr ON t.person_id = pr.person_id
@@ -137,7 +136,7 @@ class DataModel():
 
             UNION ALL
 
-            (SELECT t.store, t.item, SUM(t.price) as total_sales,
+            (SELECT t.store, t.item, SUM(t.price) as total_usd_in_sales,
             ROW_NUMBER() OVER (PARTITION BY t.store ORDER BY SUM(t.price) DESC) as rn
             FROM Transactions t
             JOIN Persons pr ON t.person_id = pr.person_id
@@ -216,48 +215,3 @@ class DataModel():
         """
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
-    
-##SQL SCHEMA
-
-# TABLE Persons (
-#     person_id INT PRIMARY KEY,
-#     firstName VARCHAR(100) NOT NULL,
-#     surname VARCHAR(100) NOT NULL,
-#     email VARCHAR(255) NOT NULL,
-#     telephone VARCHAR(20) NOT NULL,
-#     city VARCHAR(50) NOT NULL,
-#     country VARCHAR(50) NOT NULL,
-#     Android BOOLEAN NOT NULL,
-#     iPhone BOOLEAN NOT NULL,
-#     Desktop BOOLEAN NOT NULL
-# );
-
-# TABLE Promotions (
-#     promotion_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-#     client_email VARCHAR(255) NOT NULL,
-#     telephone VARCHAR(20),
-#     promotion_item VARCHAR(50) NOT NULL,
-#     responded VARCHAR(20) NOT NULL,
-#     person_id INT NOT NULL,
-#     FOREIGN KEY (person_id) REFERENCES Persons(person_id)
-# );
-
-# TABLE Transactions (
-#     transaction_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-#     person_id INT NOT NULL,
-#     item VARCHAR(50) NOT NULL,
-#     price DECIMAL NOT NULL,
-#     store VARCHAR(255) NOT NULL,
-#     transactionDate DATE NOT NULL,
-#     FOREIGN KEY (person_id) REFERENCES Persons(person_id)
-# );
-
-# TABLE Transfers (
-#     transfer_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-#     sender_id INT NOT NULL,
-#     recipient_id INT NOT NULL,
-#     amount DECIMAL NOT NULL,
-#     transferDate DATE NOT NULL,
-#     FOREIGN KEY (sender_id) REFERENCES Persons(person_id),
-#     FOREIGN KEY (recipient_id) REFERENCES Persons(person_id)
-# );

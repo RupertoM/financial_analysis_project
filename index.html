@@ -127,7 +127,7 @@
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
-        <option value="PersonsTable">All Data on People</option>
+        <option value="PersonsTable">All People Data</option>
         <option value="StoreInsightsTable">All Stores Data</option>
         <option value="TransferInsightsTable">All Transfer Data</option>
         <option value="TransactionInsightsTable">All Transaction Data</option>
@@ -150,7 +150,7 @@
           if (endpoint.includes("Table")) {
             displayContent = generateTable(data);
           } else {
-            displayContent = generateText(data);
+            console.log("No table data found.");
           }
 
           document.getElementById("dataDisplay").innerHTML = displayContent;
@@ -212,9 +212,6 @@
         return tableHTML;
       }
 
-      function generateText(data) {
-        return data;
-      }
       function resetDropdowns(currentDropdownId) {
         const dropdownIds = [
           "peopleDropdown",

@@ -20,13 +20,9 @@ class DataUploader:
         self.engine = create_engine('mysql+mysqlconnector://adminUser:userPassword!@venmito-database.ch2o2eoaqxux.us-east-1.rds.amazonaws.com/venmito')
 
         # Create tables
-        self.setup_tables()
-        
+        self.setup_tables() 
         #Populate tables
         self.upload_data()
-
-        # #Check data
-        # self.check_data()
 
     def setup_tables(self):
         try:
@@ -78,25 +74,3 @@ class DataUploader:
             print(f"Data uploaded to {table_name} successfully.")
         except Exception as e:
             print(f"Error uploading data to {table_name}: {e}")
-    
-    # def check_data(self):
-    #     try:
-    #         queries = [
-    #             "SELECT * FROM Persons;",
-    #             "SELECT * FROM Promotions;",
-    #             "SELECT * FROM Transactions;",
-    #             "SELECT * FROM Transfers;",
-    #             "SELECT firstName FROM Persons"
-    #         ]
-
-    #         for query in queries:
-    #             result = self.connection.cursor()
-    #             result.execute(query)
-    #             data = result.fetchall()
-    #             print(data)
-    #             print("\n")
-
-    #         print("Data check successful.")
-
-    #     except Exception as e:
-    #         print(f"Error checking data: {e}")
