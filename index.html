@@ -79,52 +79,47 @@
 
     <!-- People Insight Dropdown -->
     <div class="dropdown-container">
-      <label for="peopleDropdown" class="dropdown-label">People Insight:</label>
+      <label for="peopleDropdown" class="dropdown-label"
+        >People Insights:</label
+      >
       <select
         id="peopleDropdown"
         class="dropdown"
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
-        <option value="PersonsTable">All Data on People</option>
-        <option value="ClientPromotionsTable">
-          All Promotions with Client Info
+        <option value="ClientPromotionsTable">All Promotions</option>
+        <option value="NoResponseTable">All Failed Promotions</option>
+        <option value="IndividualTransTable">
+          Individuals Shopping History
         </option>
-        <option value="NoResponseTable">
-          Failed Promotions with Person Info
-        </option>
+        <option value="FavoriteStoreTable">Individuals Favorite Stores</option>
+        <option value="FavoriteItemsTable">Individuals Favorite Items</option>
+        <option value="ProbableConnectionsTable">Probable Connections</option>
       </select>
 
       <!-- Stores Insight Dropdown -->
-      <label for="storesDropdown" class="dropdown-label">Stores Insight:</label>
+      <label for="storesDropdown" class="dropdown-label"
+        >Stores Insights:</label
+      >
       <select
         id="storesDropdown"
         class="dropdown"
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
-        <option value="StoreInsightsTable">All Stores Data</option>
-        <option value="MostProfitableStore">Most Profitable Store</option>
-        <option value="TopSellingItem">Top Selling Item</option>
-        <option value="MostProfitableItem">Greatest Revenue Item</option>
+        <option value="BestSellingStoresTable">Best Selling Stores</option>
+        <option value="TopSellingItemTable">Best Selling Items</option>
+        <option value="MostProfitableItemsTable">Most Profitable Items</option>
+        <option value="SuccessfulPromotionsTable">
+          Successful Promotion Items
+        </option>
+        <option value="NoResponseByItemTable">Failed Promotion Items</option>
       </select>
 
-      <!-- Transfer Insight Dropdown -->
-      <label for="transferDropdown" class="dropdown-label"
-        >Transfer Insight:</label
-      >
-      <select
-        id="transferDropdown"
-        class="dropdown"
-        onchange="fetchData(this.value)"
-      >
-        <option value="" disabled selected>Select an Analytic</option>
-        <option value="TransferInsightsTable">All Transfer Data</option>
-      </select>
-
-      <!-- Transaction Insight Dropdown -->
+      <!-- General Insight Dropdown -->
       <label for="transactionDropdown" class="dropdown-label"
-        >Transaction Insight:</label
+        >General Data:</label
       >
       <select
         id="transactionDropdown"
@@ -132,9 +127,10 @@
         onchange="fetchData(this.value)"
       >
         <option value="" disabled selected>Select an Analytic</option>
+        <option value="PersonsTable">All Data on People</option>
+        <option value="StoreInsightsTable">All Stores Data</option>
+        <option value="TransferInsightsTable">All Transfer Data</option>
         <option value="TransactionInsightsTable">All Transaction Data</option>
-        <option value="IndividualTransTable">Shopping History by Person</option>
-        <option value="FavoriteStoreTable">Individuals Favorite Stores</option>
       </select>
     </div>
 
@@ -223,7 +219,6 @@
         const dropdownIds = [
           "peopleDropdown",
           "storesDropdown",
-          "transferDropdown",
           "transactionDropdown",
         ];
 
@@ -251,14 +246,6 @@
         .getElementById("storesDropdown")
         .addEventListener("change", (event) => {
           resetDropdowns("storesDropdown");
-          const selectedOption = event.target.value;
-          fetchData(selectedOption);
-        });
-
-      document
-        .getElementById("transferDropdown")
-        .addEventListener("change", (event) => {
-          resetDropdowns("transferDropdown");
           const selectedOption = event.target.value;
           fetchData(selectedOption);
         });

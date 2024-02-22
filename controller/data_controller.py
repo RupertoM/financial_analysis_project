@@ -12,6 +12,12 @@ class DataController():
     
     def get_no_response_clients(self):
         return data_model.get_no_response_clients()
+    
+    def get_individuals_favorite_items(self):
+        return data_model.get_individuals_favorite_items()
+    
+    def get_probable_connections(self):
+        return data_model.get_probable_connections()
 
 #STORES   
     def get_store_insights(self):
@@ -22,22 +28,10 @@ class DataController():
             return "No data available."
         
     def get_top_selling_item(self):
-        top_selling_item_data = data_model.get_top_selling_item()
-        if top_selling_item_data:
-            top_item = top_selling_item_data[0]
-            output_string = f"The top selling item is {top_item['item']}s with {int(top_item['amount_sales'])} sales."
-            return output_string
-        else:
-            return "No data available."
+        return data_model.get_top_selling_item()
     
-    def get_most_profitable_item(self):
-        most_profitable_data = data_model.get_most_profitable_item()
-        if most_profitable_data:
-            most_profitable = most_profitable_data[0]
-            output_string = f"The most profitable item is {most_profitable['item']}s with ${most_profitable['total_sales']:.2f} in revenue."
-            return output_string
-        else:
-            return "No data available."
+    def get_most_profitable_items(self):
+        return data_model.get_most_profitable_items()
         
     def get_most_profitable_store(self):
         most_profitable_store_data = data_model.get_most_profitable_store()
@@ -47,6 +41,16 @@ class DataController():
             return output_string
         else:
             return "No data available."
+        
+    def get_best_selling_stores(self):
+        return data_model.get_best_selling_stores()
+    
+
+    def get_no_response_by_item(self):
+        return data_model.get_no_response_by_item()
+    
+    def get_yes_response_by_item(self):
+        return data_model.get_yes_response_by_item()
 
 #TRANSFERS        
     def get_transfer_insights(self):

@@ -1,8 +1,8 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import sys
-from data_processor import DataProcessor
-from data_uploader import DataUploader
+from utility.data_processor import DataProcessor
+from utility.data_uploader import DataUploader
 from controller.data_controller import DataController
 
 app = Flask(__name__)
@@ -24,14 +24,26 @@ def get_promotion_data():
 def get_no_response_data():
     return jsonify(DC.get_no_response_clients())
 
+@app.route('/api/NoResponseByItemTable', methods=['GET'])
+def get_no_response_by_item():
+    return jsonify(DC.get_no_response_by_item())
+
+@app.route('/api/FavoriteItemsTable', methods=['GET'])
+def get_individuals_favorite_items():
+    return jsonify(DC.get_individuals_favorite_items())
+
+@app.route('/api/ProbableConnectionsTable', methods=['GET'])
+def get_probable_connections():
+    return jsonify(DC.get_probable_connections())
+
 #STORES
-@app.route('/api/TopSellingItem', methods=['GET'])
+@app.route('/api/TopSellingItemTable', methods=['GET'])
 def get_top_selling_item():
     return jsonify(DC.get_top_selling_item())
 
-@app.route('/api/MostProfitableItem', methods=['GET'])
+@app.route('/api/MostProfitableItemsTable', methods=['GET'])
 def get_most_profitable_item():
-    return jsonify(DC.get_most_profitable_item())
+    return jsonify(DC.get_most_profitable_items())
 
 @app.route('/api/MostProfitableStore', methods=['GET'])
 def get_most_profitable_store():
@@ -40,6 +52,14 @@ def get_most_profitable_store():
 @app.route('/api/StoreInsightsTable', methods=['GET'])
 def get_store_insights():
     return jsonify(DC.get_store_insights())
+
+@app.route('/api/BestSellingStoresTable', methods=['GET'])
+def get_best_selling_stores():
+    return jsonify(DC.get_best_selling_stores())
+
+@app.route('/api/SuccessfulPromotionsTable', methods=['GET'])
+def get_yes_response_by_item():
+    return jsonify(DC.get_yes_response_by_item())
 
 #TRANSFERS
 @app.route('/api/TransferInsightsTable', methods=['GET'])

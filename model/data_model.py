@@ -48,6 +48,52 @@ class DataModel():
         result['visited_stores'] = result['visited_stores'].fillna('None')
         return result.to_dict(orient='records')
     
+    def get_individuals_transactions(self):
+        query = """
+        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, t.item, t.price, t.store, t.transactionDate
+        FROM Transactions t
+        JOIN Persons pr ON t.person_id = pr.person_id
+        ORDER BY full_name, t.transactionDate
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_persons_favorite_store(self):
+        query = """
+        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, t.store as favorite_store, COUNT(t.store) as visits
+        FROM Transactions t
+        JOIN Persons pr ON t.person_id = pr.person_id
+        GROUP BY full_name, favorite_store
+        ORDER BY full_name, visits DESC
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_individuals_favorite_items(self):
+        query = """
+        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, GROUP_CONCAT(t.item) as favorite_items
+        FROM Transactions t
+        JOIN Persons pr ON t.person_id = pr.person_id
+        GROUP BY full_name
+        ORDER BY full_name
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_probable_connections(self):
+        query = """
+        SELECT CONCAT(sender.firstName, ' ', sender.surname) AS sender_name,
+            CONCAT(recipient.firstName, ' ', recipient.surname) AS recipient_name,
+            COUNT(tr.transfer_id) AS number_of_transfers, SUM(tr.amount) AS total_amount_transferred
+        FROM Transfers tr
+        JOIN Persons sender ON tr.sender_id = sender.person_id
+        JOIN Persons recipient ON tr.recipient_id = recipient.person_id
+        GROUP BY sender_name, recipient_name
+        ORDER BY total_amount_transferred DESC
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+
 #STORES
     def get_store_insights(self):
         #Select individual items and put them in a list within "item" column
@@ -62,26 +108,47 @@ class DataModel():
     
     def get_top_selling_item(self):
         query = """
-        SELECT t.item, COUNT(t.item) as amount_sales
-        FROM Transactions t
-        GROUP BY t.item
-        ORDER BY amount_sales DESC
-        LIMIT 1
+        SELECT store, item, amount_of_sales FROM (
+            (SELECT 'Overall' AS store, t.item, COUNT(t.item) as amount_of_sales,
+            ROW_NUMBER() OVER (ORDER BY COUNT(t.item) DESC) as rn
+            FROM Transactions t
+            GROUP BY t.item)
+
+            UNION ALL
+
+            (SELECT t.store, t.item, COUNT(t.item) as amount_of_sales,
+            ROW_NUMBER() OVER (PARTITION BY t.store ORDER BY COUNT(t.item) DESC) as rn
+            FROM Transactions t
+            GROUP BY t.store, t.item)
+        ) subquery
+        WHERE rn = 1
         """
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
 
-    def get_most_profitable_item(self):
+    def get_most_profitable_items(self):
         query = """
-        SELECT t.item, SUM(t.price) as total_sales
-        FROM Transactions t
-        JOIN Persons pr ON t.person_id = pr.person_id
-        GROUP BY t.item
-        ORDER BY total_sales DESC
-        LIMIT 1
+        SELECT store, item, total_sales FROM (
+            (SELECT 'Overall' AS store, t.item, SUM(t.price) as total_sales,
+            ROW_NUMBER() OVER (ORDER BY SUM(t.price) DESC) as rn
+            FROM Transactions t
+            JOIN Persons pr ON t.person_id = pr.person_id
+            GROUP BY t.item)
+
+            UNION ALL
+
+            (SELECT t.store, t.item, SUM(t.price) as total_sales,
+            ROW_NUMBER() OVER (PARTITION BY t.store ORDER BY SUM(t.price) DESC) as rn
+            FROM Transactions t
+            JOIN Persons pr ON t.person_id = pr.person_id
+            GROUP BY t.store, t.item)
+        ) subquery
+        WHERE rn = 1
         """
         result = pd.read_sql(query, self.engine)
+        print(result)
         return result.to_dict(orient='records')
+
 
     def get_most_profitable_store(self):
         query = """
@@ -92,6 +159,40 @@ class DataModel():
         LIMIT 1
         """
 
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_best_selling_stores(self):
+        query = """
+        SELECT t.store, COUNT(t.item) as amount_of_sales, SUM(t.price) as total_profit
+        FROM Transactions t
+        GROUP BY t.store
+        ORDER BY amount_of_sales DESC
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_no_response_by_item(self):
+        query = """
+        SELECT p.promotion_item, COUNT(p.responded) as attempts_made, GROUP_CONCAT(DISTINCT CONCAT(pr.firstName, ' ', pr.surname)) as attempted_clients
+        FROM Promotions p
+        JOIN Persons pr ON pr.person_id = p.person_id
+        WHERE p.responded = 'No'
+        GROUP BY p.promotion_item
+        ORDER BY attempts_made DESC
+        """
+        result = pd.read_sql(query, self.engine)
+        return result.to_dict(orient='records')
+    
+    def get_yes_response_by_item(self):
+        query = """
+        SELECT p.promotion_item, COUNT(p.responded) as attempts_made, GROUP_CONCAT(DISTINCT CONCAT(pr.firstName, ' ', pr.surname)) as attempted_clients
+        FROM Promotions p
+        JOIN Persons pr ON pr.person_id = p.person_id
+        WHERE p.responded = 'Yes'
+        GROUP BY p.promotion_item
+        ORDER BY attempts_made DESC
+        """
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
 
@@ -116,27 +217,6 @@ class DataModel():
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
     
-    def get_individuals_transactions(self):
-        query = """
-        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, t.item, t.price, t.store, t.transactionDate
-        FROM Transactions t
-        JOIN Persons pr ON t.person_id = pr.person_id
-        ORDER BY full_name, t.transactionDate
-        """
-        result = pd.read_sql(query, self.engine)
-        return result.to_dict(orient='records')
-    
-    def get_persons_favorite_store(self):
-        query = """
-        SELECT CONCAT(pr.firstName, ' ', pr.surname) AS full_name, t.store as favorite_store, COUNT(t.store) as visits
-        FROM Transactions t
-        JOIN Persons pr ON t.person_id = pr.person_id
-        GROUP BY full_name, favorite_store
-        ORDER BY full_name, visits DESC
-        """
-        result = pd.read_sql(query, self.engine)
-        return result.to_dict(orient='records')
-
 ##SQL SCHEMA
 
 # TABLE Persons (

@@ -30,7 +30,7 @@ class DataUploader:
 
     def setup_tables(self):
         try:
-            with open('tables_setup.sql', 'r') as file:
+            with open('utility/tables_setup.sql', 'r') as file:
                 sql_script = file.read()
 
             cursor = self.connection.cursor()
