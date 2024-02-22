@@ -26,6 +26,92 @@ The project is organized using the MVC methodology:
 
 - **Data Uploading**: `data_uploader.py` is used for pushing data into the MySQL server, ensuring the model only fetches data without manipulating it while also allowing for the ease of resetting the database at any time given that no new data was being passed in.
 
+## SQL Schema
+
+### Persons Table
+
+- **Columns:**
+  - `person_id` INT PRIMARY KEY
+  - `firstName` VARCHAR(100) NOT NULL
+  - `surname` VARCHAR(100) NOT NULL
+  - `email` VARCHAR(255) NOT NULL
+  - `telephone` VARCHAR(20) NOT NULL
+  - `city` VARCHAR(50) NOT NULL
+  - `country` VARCHAR(50) NOT NULL
+  - `Android` BOOLEAN NOT NULL
+  - `iPhone` BOOLEAN NOT NULL
+  - `Desktop` BOOLEAN NOT NULL
+
+### Promotions Table
+
+- **Columns:**
+  - `promotion_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  - `client_email` VARCHAR(255) NOT NULL
+  - `telephone` VARCHAR(20)
+  - `promotion_item` VARCHAR(50) NOT NULL
+  - `responded` VARCHAR(20) NOT NULL
+  - `person_id` INT NOT NULL, FOREIGN KEY (person_id) REFERENCES Persons(person_id)
+
+### Transactions Table
+
+- **Columns:**
+  - `transaction_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  - `person_id` INT NOT NULL, FOREIGN KEY (person_id) REFERENCES Persons(person_id)
+  - `item` VARCHAR(50) NOT NULL
+  - `price` DECIMAL NOT NULL
+  - `store` VARCHAR(255) NOT NULL
+  - `transactionDate` DATE NOT NULL
+
+### Transfers Table
+
+- **Columns:**
+  - `transfer_id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  - `sender_id` INT NOT NULL, FOREIGN KEY (sender_id) REFERENCES Persons(person_id)
+  - `recipient_id` INT NOT NULL, FOREIGN KEY (recipient_id) REFERENCES Persons(person_id)
+  - `amount` DECIMAL NOT NULL
+  - `transferDate` DATE NOT NULL
+
+## Data Analysis
+
+1. **People Insights:**
+
+   - *Use Case:* This option allows users to analyze data related to individuals, such as their personal information, possible connections, shopping trends, and more.
+
+   - *Company Benefits:* Understanding customers and preferences helps Venmito tailor promotions and communication strategies, enhancing customer satisfaction and loyalty.
+
+   - *Available Analytics:*
+     - **All Promotions:** Displays all currently available promotions, including recipient information so that the viewer can get an overview.
+     - **All Failed Promotions:** Lists individuals who rejected promotions along with their contact information, facilitating follow-up efforts to convert negative responses.
+     - **Individuals Shopping History:** Displays data on individuals' transaction history, including purchased items and transaction details.
+     - **Individuals Favorite Stores:** Highlights stores frequently visited by each individual enabling understanding of store access and item availability.
+     - **Individuals Favorite Items:** Lists items purchased and favored by individuals, enabling targeted promotions.
+     - **Probable Connections:** Identifies individuals likely acquainted, facilitating potential joint promotions and communications.
+
+2. **Stores Insights:**
+
+   - *Use Case:* Analyzing store data provides insights into store performance, popular items, profitability, promotion performance, and more.
+
+   - *Company Benefits:* Venmito can optimize store operations, stock popular items, and improve overall store efficiency.
+
+   - *Available Analytics:*
+     - **Best Selling Stores:** Highlights stores with the highest sales.
+     - **Best Selling Items:** Identifies the best-selling item across all stores and the best-selling item across each individual store.
+     - **Most Profitable Items:** Lists the most profitable item across all stores and the most profitable per each store.
+     - **Successful Promotion Items:** Displays items that performed well in promotions and who they succeded with.
+     - **Failed Promotion Items:** Lists items that did not perform well in promotions and who they did not perform well with.
+
+3. **General Data:**
+
+   - *Use Case:* Provides access to general data, allowing users to view comprehensive information.
+
+   - *Company Benefits:* Enables users to explore overall trends, patterns, and information within the dataset by having full access.
+
+   - *Available Analytics:*
+     - **All Data on People:** Provides comprehensive data on all individuals within the dataset.
+     - **All Stores Data:** Displays comprehensive data on all stores.
+     - **All Transfer Data:** Provides a detailed overview of all transfer transactions.
+     - **All Transaction Data:** Offers a comprehensive view of all transactions.
+
 ## Setup and Usage
 
 1. **Install and Setup Virtual Environment:**
@@ -89,24 +175,7 @@ The project is organized using the MVC methodology:
      ```bash
      deactivate
      ```
-
-## Data Processing Steps
-
-1. **Ingestion:**
-
-   - Read the data from the provided files (`people.json`, `people.yml`, `transfers.csv`, `transactions.xml`, `promotions.csv`) using Pandas.
-
-2. **Matching and Conforming:**
-
-   - Implement matching and conforming logic in `data_processor.py` to ensure data consistency.
-
-3. **Analysis:**
-
-   - Use Pandas and SQL queries to analyze data based on user interactions with the front end.
-
-4. **Output:**
-   - Display the analyzed data on the web interface for the user to interact with.
-
+     
 ## Future Improvements
 
 - **Enhanced Analytics:**
@@ -121,4 +190,4 @@ The project is organized using the MVC methodology:
 
 ## Contributors
 
-- [Ruperto Martinez]
+- Ruperto Martinez
