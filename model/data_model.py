@@ -28,7 +28,7 @@ class DataModel():
         SELECT p.promotion_item, CONCAT(pr.firstName, ' ', pr.surname) AS full_name, p.responded, pr.email, pr.telephone
         FROM Promotions p
         JOIN Persons pr ON p.person_id = pr.person_id
-        ORDER BY p.promotion_item
+        ORDER BY p.promotion_item, p.responded DESC
         """
         result = pd.read_sql(query, self.engine)
         return result.to_dict(orient='records')
