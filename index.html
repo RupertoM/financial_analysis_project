@@ -175,14 +175,6 @@
           }
         });
 
-        // Check if both "firstName" and "surname" columns exist for adding the "Full Name" header
-        const hasFirstName = columns.includes("firstName");
-        const hasSurname = columns.includes("surname");
-
-        if (hasFirstName && hasSurname) {
-          tableHTML += "<th>Full Name</th>";
-        }
-
         tableHTML += "</tr>";
 
         // Create table rows
@@ -197,12 +189,6 @@
               tableHTML += `<td>${cellValue}</td>`;
             }
           });
-
-          // Combine firstName and surname into fullName if both columns exist
-          if (hasFirstName && hasSurname) {
-            const fullName = `${item["firstName"]} ${item["surname"]}`;
-            tableHTML += `<td>${fullName}</td>`;
-          }
 
           tableHTML += "</tr>";
         });

@@ -18,6 +18,12 @@ class DataController():
     
     def get_probable_connections(self):
         return data_model.get_probable_connections()
+    
+    def get_individuals_transactions(self):
+        return data_model.get_individuals_transactions()
+    
+    def get_person_favorite_store(self):
+        return data_model.get_persons_favorite_store()
 
 #STORES   
     def get_store_insights(self):
@@ -45,7 +51,6 @@ class DataController():
     def get_best_selling_stores(self):
         return data_model.get_best_selling_stores()
     
-
     def get_no_response_by_item(self):
         return data_model.get_no_response_by_item()
     
@@ -63,9 +68,3 @@ class DataController():
 #TRANSACTIONS
     def get_all_transactions(self):
         return data_model.get_all_transactions()
-    
-    def get_individuals_transactions(self):
-        return data_model.get_individuals_transactions()
-    
-    def get_person_favorite_store(self):
-        return data_model.get_persons_favorite_store()

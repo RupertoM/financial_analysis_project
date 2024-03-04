@@ -36,6 +36,14 @@ def get_individuals_favorite_items():
 def get_probable_connections():
     return jsonify(DC.get_probable_connections())
 
+@app.route('/api/IndividualTransTable', methods=['GET'])
+def get_shopping_history():
+    return jsonify(DC.get_individuals_transactions())
+
+@app.route('/api/FavoriteStoreTable', methods=['GET'])
+def get_favorite_stores():
+    return jsonify(DC.get_person_favorite_store())
+
 #STORES
 @app.route('/api/TopSellingItemTable', methods=['GET'])
 def get_top_selling_item():
@@ -71,20 +79,11 @@ def get_transfer_insights():
 def get_transaction_insights():
     return jsonify(DC.get_all_transactions())
 
-@app.route('/api/IndividualTransTable', methods=['GET'])
-def get_shopping_history():
-    return jsonify(DC.get_individuals_transactions())
-
-@app.route('/api/FavoriteStoreTable', methods=['GET'])
-def get_favorite_stores():
-    return jsonify(DC.get_person_favorite_store())
-
 if __name__ == "__main__":
     # Check for database reset argument
     if len(sys.argv) > 1 and sys.argv[1] == "--reset-db":
         #Process Data using DataProcessor
-        data_processor = DataProcessor()
-        persons, promotions, transactions, transfers = data_processor.get_processed_data()
+        persons, promotions, transactions, transfers = DataProcessor().get_processed_data()
 
         # #Upload Data to AWS MySQL using DataUploader
         DataUploader(persons, promotions, transactions, transfers)
