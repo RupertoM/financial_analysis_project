@@ -60,7 +60,7 @@ class DataProcessor():
             
             #Otherwise, check if the telephone is registered
             else:
-                registered_number = self.shared_people_df.loc[i, 'telephone']
+                registered_number = self.promotions_df.loc[i, 'telephone']
                 person_row = self.shared_people_df[self.shared_people_df['telephone'] == registered_number]
                 list_of_ids.append(person_row['id'].values[0])
             
