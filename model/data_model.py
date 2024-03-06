@@ -35,7 +35,7 @@ class DataModel():
 
     def get_no_response_clients(self):
         query = """
-        SELECT p.promotion_item, CONCAT(pr.firstName, ' ', pr.surname) AS full_name, p.client_email, p.telephone, GROUP_CONCAT(DISTINCT t.store) AS visited_stores
+        SELECT p.promotion_item, CONCAT(pr.firstName, ' ', pr.surname) AS full_name, pr.email, pr.telephone, GROUP_CONCAT(DISTINCT t.store) AS visited_stores
         FROM Promotions p
         JOIN Persons pr ON p.person_id = pr.person_id
         LEFT JOIN Transactions t ON p.person_id = t.person_id
