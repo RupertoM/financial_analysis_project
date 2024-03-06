@@ -56,6 +56,8 @@ class DataModel():
         ORDER BY full_name, t.transactionDate
         """
         result = pd.read_sql(query, self.engine)
+        # Format the 'price' column to ensure two decimal places
+        result['price'] = result['price'].apply(lambda x: f'{x:.2f}')
         return result.to_dict(orient='records')
     
     def get_persons_favorite_store(self):
@@ -145,7 +147,8 @@ class DataModel():
         WHERE rn = 1
         """
         result = pd.read_sql(query, self.engine)
-        print(result)
+        # Format the 'price' column to ensure two decimal places
+        result['total_usd_in_sales'] = result['total_usd_in_sales'].apply(lambda x: f'{x:.2f}')
         return result.to_dict(orient='records')
 
 
@@ -169,6 +172,8 @@ class DataModel():
         ORDER BY amount_of_sales DESC
         """
         result = pd.read_sql(query, self.engine)
+        # Format the 'total_profit' column to ensure two decimal places
+        result['total_profit'] = result['total_profit'].apply(lambda x: f'{x:.2f}')
         return result.to_dict(orient='records')
     
     def get_no_response_by_item(self):
@@ -214,4 +219,6 @@ class DataModel():
         JOIN Persons pr ON t.person_id = pr.person_id
         """
         result = pd.read_sql(query, self.engine)
+        # Format the 'price' column to ensure two decimal places
+        result['price'] = result['price'].apply(lambda x: f'{x:.2f}')
         return result.to_dict(orient='records')
